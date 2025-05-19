@@ -52,12 +52,12 @@ public class DietStrategyCalculator {
         double BMR = (13.75 * this.weight) + (5 * this.height) - (6.75 * this.age) + 66.5;
         double BMRWithExercise = BMR * exerciseCoeficient;
 
-        System.out.println("\n=== BMR Calculation Table ===");
+        System.out.println("\n=== BMR Calculation Table ================");
         System.out.printf("| %-20s | %10.2f kcal |\n", "Harris-Benedict", HarrisBenedict);
         System.out.printf("| %-20s | %10.2f kcal |\n", "FAO/OMS", OMS);
         System.out.printf("| %-20s | %10.2f kcal |\n", "Mifflin-St Jeor", MifflinStJeor);
         System.out.printf("| %-20s | %10.2f kcal |\n", "BMR w/ Exercise", BMRWithExercise);
-        System.out.println("==============================\n");
+        System.out.println("==========================================\n");
 
         this.setBMR(BMRWithExercise);
     }
