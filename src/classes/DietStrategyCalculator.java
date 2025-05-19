@@ -55,6 +55,7 @@ public class DietStrategyCalculator {
 
         System.out.println("Protein: " + protein + "g");
         System.out.println("Fat: " + fat + "g");
-        System.out.println("Carbs: " + carbs + "g");
+        System.out.println("Carbs: " + carbs
+                + "g (if you are not losting weight, you can decrease it to 0.2g and see the results)");
     }
 }
