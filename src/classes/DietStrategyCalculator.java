@@ -58,4 +58,9 @@ public class DietStrategyCalculator {
         System.out.println("Carbs (2g/kg): " + carbs
                 + "g (if you are not losting weight, you can decrease it to 0.2g and see the results)");
     }
+
+    public void WaterIntakePerDay() {
+        double waterIntake = this.weight * 0.033;
+        System.out.println("Water intake per day: " + waterIntake + "L");
+    }
 }

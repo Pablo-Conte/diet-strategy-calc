@@ -31,6 +31,8 @@ public class App {
         System.out.println("----- My diet strategy: -----");
         System.out.println("Cutting macros:");
         calculator.CuttingMacros();
+        System.out.println("----- Daily water intake -----");
+        calculator.WaterIntakePerDay();
         System.out.println("------------------------------------");
 
         scanner.close();
