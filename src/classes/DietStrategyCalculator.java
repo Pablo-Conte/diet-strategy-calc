@@ -4,11 +4,20 @@ public class DietStrategyCalculator {
     private double weight;
     private double height;
     private int age;
+    private double BMR;
 
     public DietStrategyCalculator(double weight, double height, int age) {
         this.weight = weight;
         this.height = height;
         this.age = age;
+    }
+
+    public double getBMR() {
+        return BMR;
+    }
+
+    public void setBMR(double bMR) {
+        BMR = bMR;
     }
 
     public double getWeight() {
@@ -40,27 +49,51 @@ public class DietStrategyCalculator {
         double OMS = (15.057 * this.weight) + 692.2;
         double MifflinStJeor = (10 * this.weight) + (6.25 * this.height) - (5.0 * this.age) - 161;
         double BMRWithExercise = exerciseCoeficient
-                * (66.47 + (13.75 * this.weight) + (5 * this.height) - (6.8 * this.age));
+                * (66 + (13.75 * this.weight) + (5 * this.height) - (6.75 * this.age));
 
-        System.out.println("Harris-Benedict: " + HarrisBenedict);
-        System.out.println("OMS: " + OMS);
-        System.out.println("Mifflin-St Jeor: " + MifflinStJeor + " (acurate for lost weight)");
-        System.out.println("BMR with exercise: " + BMRWithExercise);
+        System.out.println("\n=== BMR Calculation Table ===");
+        System.out.printf("| %-20s | %10.2f kcal |\n", "Harris-Benedict", HarrisBenedict);
+        System.out.printf("| %-20s | %10.2f kcal |\n", "FAO/OMS", OMS);
+        System.out.printf("| %-20s | %10.2f kcal |\n", "Mifflin-St Jeor", MifflinStJeor);
+        System.out.printf("| %-20s | %10.2f kcal |\n", "BMR w/ Exercise", BMRWithExercise);
+        System.out.println("==============================\n");
+
+        this.setBMR(BMRWithExercise);
     }
 
     public void CuttingMacros() {
         double protein = 2 * this.weight;
         double fat = 1 * this.weight;
-        double carbs = 2 * this.weight;
 
-        System.out.println("Protein (2g/kg): " + protein + "g");
-        System.out.println("Fat (1g/kg): " + fat + "g");
-        System.out.println("Carbs (2g/kg): " + carbs
-                + "g (if you are not losting weight, you can decrease it to 0.2g and see the results)");
+        double proteinKcal = protein * 4;
+        double fatKcal = fat * 9;
+
+        double totalKcalToLoseWeight = this.getBMR() - 400;
+        double deficit = this.getBMR() - totalKcalToLoseWeight;
+
+        double proteinKcalPlusFatKcal = proteinKcal + fatKcal;
+
+        double carbsKcal = totalKcalToLoseWeight - proteinKcalPlusFatKcal;
+        double carbs = carbsKcal / 4;
+
+        System.out.println("=== Macronutrients for Cutting ===");
+        System.out.printf("| %-10s | %7s | %10s |\n", "Macro", "Grams", "Calories");
+        System.out.printf("|------------|---------|------------|\n");
+        System.out.printf("| %-10s | %7.1f | %10.1f |\n", "Protein", protein, proteinKcal);
+        System.out.printf("| %-10s | %7.1f | %10.1f |\n", "Fat", fat, fatKcal);
+        System.out.printf("| %-10s | %7.1f | %10.1f |\n", "Carbs", carbs, carbsKcal);
+        System.out.println("------------------------------------");
+        System.out.printf("| %-19s | %10.1f |\n", "Total kcal to cut", totalKcalToLoseWeight);
+        System.out.printf("| %-19s | %10.1f |\n", "Original TDEE", this.getBMR());
+        System.out.printf("| %-19s | %10.1f |\n", "Caloric Deficit", deficit);
+        System.out.println("====================================\n");
     }
 
     public void WaterIntakePerDay() {
         double waterIntake = this.weight * 0.033;
-        System.out.println("Water intake per day: " + waterIntake + "L");
+
+        System.out.println("=== Daily Water Intake ===");
+        System.out.printf("| %-10s | %5.2f L |\n", "Water", waterIntake);
+        System.out.println("===========================\n");
     }
 }

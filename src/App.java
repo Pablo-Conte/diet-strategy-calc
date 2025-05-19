@@ -26,14 +26,10 @@ public class App {
         System.out.println("Age: " + calculator.getAge() + " years");
         System.out.println("Height: " + calculator.getHeight() + " cm");
         System.out.println("Weight: " + calculator.getWeight() + " kg\n");
-        System.out.println("----- My fitness Info: -----");
+
         calculator.BMRCalculator(exerciseCoefficient);
-        System.out.println("----- My diet strategy: -----");
-        System.out.println("Cutting macros:");
         calculator.CuttingMacros();
-        System.out.println("----- Daily water intake -----");
         calculator.WaterIntakePerDay();
-        System.out.println("------------------------------------");
 
         scanner.close();
     }
