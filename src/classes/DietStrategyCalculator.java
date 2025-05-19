@@ -53,9 +53,9 @@ public class DietStrategyCalculator {
         double fat = 1 * this.weight;
         double carbs = 2 * this.weight;
 
-        System.out.println("Protein: " + protein + "g");
-        System.out.println("Fat: " + fat + "g");
-        System.out.println("Carbs: " + carbs
+        System.out.println("Protein (2g/kg): " + protein + "g");
+        System.out.println("Fat (1g/kg): " + fat + "g");
+        System.out.println("Carbs (2g/kg): " + carbs
                 + "g (if you are not losting weight, you can decrease it to 0.2g and see the results)");
     }
 }
