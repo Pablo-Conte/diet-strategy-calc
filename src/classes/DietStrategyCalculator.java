@@ -48,8 +48,9 @@ public class DietStrategyCalculator {
         double HarrisBenedict = 66 + (13.8 * this.weight) + (5.0 * this.height) - (6.8 * this.age);
         double OMS = (15.057 * this.weight) + 692.2;
         double MifflinStJeor = (10 * this.weight) + (6.25 * this.height) - (5.0 * this.age) - 161;
-        double BMRWithExercise = exerciseCoeficient
-                * (66 + (13.75 * this.weight) + (5 * this.height) - (6.75 * this.age));
+
+        double BMR = (13.75 * this.weight) + (5 * this.height) - (6.75 * this.age) + 66.5;
+        double BMRWithExercise = BMR * exerciseCoeficient;
 
         System.out.println("\n=== BMR Calculation Table ===");
         System.out.printf("| %-20s | %10.2f kcal |\n", "Harris-Benedict", HarrisBenedict);
@@ -68,8 +69,8 @@ public class DietStrategyCalculator {
         double proteinKcal = protein * 4;
         double fatKcal = fat * 9;
 
-        double totalKcalToLoseWeight = this.getBMR() - 400;
-        double deficit = this.getBMR() - totalKcalToLoseWeight;
+        double deficit = this.getBMR() * 0.15;
+        double totalKcalToLoseWeight = this.getBMR() - deficit;
 
         double proteinKcalPlusFatKcal = proteinKcal + fatKcal;
 
