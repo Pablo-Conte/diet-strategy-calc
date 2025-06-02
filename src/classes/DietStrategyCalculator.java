@@ -1,23 +1,28 @@
 package classes;
 
+import types.BMRTypes;
+import types.GenderTypes;
+
 public class DietStrategyCalculator {
     private double weight;
     private double height;
     private int age;
-    private double BMR;
+    private double BMRValue;
+    private GenderTypes gender;
 
-    public DietStrategyCalculator(double weight, double height, int age) {
+    public DietStrategyCalculator(double weight, double height, int age, GenderTypes gender) {
         this.weight = weight;
         this.height = height;
         this.age = age;
+        this.gender = gender;
     }
 
-    public double getBMR() {
-        return BMR;
+    public double getBMRValue() {
+        return BMRValue;
     }
 
-    public void setBMR(double bMR) {
-        BMR = bMR;
+    public void setBMRValue(double BMR) {
+        BMRValue = BMR;
     }
 
     public double getWeight() {
@@ -44,22 +49,27 @@ public class DietStrategyCalculator {
         this.age = age;
     }
 
-    public void BMRCalculator(double exerciseCoeficient) {
-        double HarrisBenedict = 66 + (13.8 * this.weight) + (5.0 * this.height) - (6.8 * this.age);
-        double OMS = (15.057 * this.weight) + 692.2;
-        double MifflinStJeor = (10 * this.weight) + (6.25 * this.height) - (5.0 * this.age) - 161;
+    public void BMRCalculator(double exerciseCoeficient, BMRTypes type) {
+        switch (type) {
+            case HARRIS_BENEDICT:
+                double result = BMR.harrisBenedict(this.weight, this.height, this.age, this.gender);
+                this.setBMRValue(result);
+                break;
+            case OMS:
+                result = BMR.OMS(this.weight, this.age, this.gender);
+                this.setBMRValue(result);
+                break;
+            case MIFFLIN_ST_JEOR:
+                result = BMR.mifflinStJeor(this.weight, this.height, this.age, this.gender);
+                this.setBMRValue(result);
+                break;
+            default:
+                break;
+        }
 
-        double BMR = (13.75 * this.weight) + (5 * this.height) - (6.75 * this.age) + 66.5;
-        double BMRWithExercise = BMR * exerciseCoeficient;
+        double BMRWithExercise = this.getBMRValue() * exerciseCoeficient;
 
-        System.out.println("\n=== BMR Calculation Table ================");
-        System.out.printf("| %-20s | %10.2f kcal |\n", "Harris-Benedict", HarrisBenedict);
-        System.out.printf("| %-20s | %10.2f kcal |\n", "FAO/OMS", OMS);
-        System.out.printf("| %-20s | %10.2f kcal |\n", "Mifflin-St Jeor", MifflinStJeor);
-        System.out.printf("| %-20s | %10.2f kcal |\n", "BMR w/ Exercise", BMRWithExercise);
-        System.out.println("==========================================\n");
-
-        this.setBMR(BMRWithExercise);
+        this.setBMRValue(BMRWithExercise);
     }
 
     public void CuttingMacros() {
@@ -69,8 +79,8 @@ public class DietStrategyCalculator {
         double proteinKcal = protein * 4;
         double fatKcal = fat * 9;
 
-        double deficit = this.getBMR() * 0.15;
-        double totalKcalToLoseWeight = this.getBMR() - deficit;
+        double deficit = this.getBMRValue() * 0.15;
+        double totalKcalToLoseWeight = this.getBMRValue() - deficit;
 
         double proteinKcalPlusFatKcal = proteinKcal + fatKcal;
 
@@ -85,7 +95,7 @@ public class DietStrategyCalculator {
         System.out.printf("| %-10s | %7.1f | %10.1f |\n", "Carbs", carbs, carbsKcal);
         System.out.println("------------------------------------");
         System.out.printf("| %-19s | %10.1f |\n", "Total kcal to cut", totalKcalToLoseWeight);
-        System.out.printf("| %-19s | %10.1f |\n", "Original TDEE", this.getBMR());
+        System.out.printf("| %-19s | %10.1f |\n", "Original TDEE", this.getBMRValue());
         System.out.printf("| %-19s | %10.1f |\n", "Caloric Deficit", deficit);
         System.out.println("====================================\n");
     }
